@@ -1,6 +1,5 @@
 import dataclasses
 from dataclasses import dataclass, is_dataclass
-from unittest.mock import patch
 
 import pytest
 
@@ -60,16 +59,3 @@ def test_convert_to_string() -> None:
     stub = StubWithTwoProps(prop1=prop1, prop2=prop2)
 
     assert str(stub) == f'{{"prop1": "{prop1}", "prop2": {prop2}}}'
-
-
-def test_validate_has_been_called() -> None:
-    with patch.object(Stub, '_validate', autospec=True) as mock_validate:
-        prop = "prop"
-        Stub(prop=prop)
-        mock_validate.assert_called_once()
-
-    with patch.object(StubWithTwoProps, '_validate', autospec=True) as mock_validate:
-        prop1 = "prop1"
-        prop2 = 1
-        StubWithTwoProps(prop1=prop1, prop2=prop2)
-        mock_validate.assert_called_once()

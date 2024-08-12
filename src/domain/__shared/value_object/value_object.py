@@ -1,10 +1,10 @@
 import json
-from abc import ABC, abstractmethod
+from abc import ABC
 from dataclasses import dataclass, fields
 
 
 @dataclass(frozen=True, slots=True)
-class ValueObject(ABC):
+class ValueObject(ABC):  # noqa: B024
     """An abstract base class for Value Objects.
 
     Value Objects are immutable objects that are defined by their values,
@@ -12,18 +12,6 @@ class ValueObject(ABC):
 
     They are typically used to represent domain concepts.
     """
-
-    @abstractmethod
-    def _validate(self) -> None:
-        """Validate the value object.
-
-        Raises:
-            DomainError: If the value object is invalid.
-        """
-
-    def __post_init__(self) -> None:
-        """Validate the value object after initialization."""
-        self._validate()
 
     def __str__(self) -> str:
         field_names = [f.name for f in fields(self)]

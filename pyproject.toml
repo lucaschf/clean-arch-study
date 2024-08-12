@@ -9,6 +9,7 @@ packages = [{ include = "src" }]
 
 [tool.poetry.dependencies]
 python = "~3.12"
+bson = "^0.5.10"
 
 
 [tool.poetry.group.dev.dependencies]
