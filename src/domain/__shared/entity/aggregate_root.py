@@ -3,6 +3,7 @@ from dataclasses import asdict, dataclass, field
 from datetime import datetime
 from typing import Optional
 
+from ..validator import ValidationError
 from ..validator.validator_interface import ValidationResult
 from .external_entity_id import ExternalEntityId
 from .unique_entity_id import UniqueEntityId
@@ -54,7 +55,7 @@ class AggregateRoot(ABC):
         """Post-initialization processing to validate the aggregate root."""
         validation_result = self.validate()
         if not validation_result.is_valid:
-            raise validation_result.errors
+            raise ValidationError(errors=validation_result.errors)
 
     def to_dict(self) -> dict:
         """Converts the aggregate root to a dictionary.
