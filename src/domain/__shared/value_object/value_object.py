@@ -5,13 +5,7 @@ from dataclasses import dataclass, fields
 
 @dataclass(frozen=True, slots=True)
 class ValueObject(ABC):  # noqa: B024
-    """An abstract base class for Value Objects.
-
-    Value Objects are immutable objects that are defined by their values,
-    not their identity.
-
-    They are typically used to represent domain concepts.
-    """
+    """An abstract base class for Value Objects."""
 
     def __str__(self) -> str:
         field_names = [f.name for f in fields(self)]
