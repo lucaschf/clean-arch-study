@@ -1,4 +1,4 @@
-from dataclasses import FrozenInstanceError
+from dataclasses import FrozenInstanceError, dataclass
 from datetime import datetime
 from unittest.mock import patch
 
@@ -8,6 +8,7 @@ from src.domain.__shared.entity import AggregateRoot, ExternalEntityId
 from src.domain.__shared.validator import ValidationError, ValidationErrorDetails, ValidationResult
 
 
+@dataclass(frozen=True, slots=True)
 class StubEntity(AggregateRoot):
     def validate(self) -> ValidationResult:  # noqa: D102
         return ValidationResult(is_valid=True)
@@ -72,3 +73,34 @@ def test_aggregate_root_calls_validate() -> None:
         StubEntity()
 
     mock_validate.assert_called_once()
+
+
+@dataclass(kw_only=True, frozen=True, slots=True)
+class StubCustomerEntity(AggregateRoot):
+    name: str
+
+    def update_email(self, new_email: str) -> 'StubCustomerEntity':  # noqa: D102
+        self._set("email", new_email)  # Should raise error
+        return self
+
+    def validate(self) -> ValidationResult:  # noqa: D102
+        return ValidationResult(is_valid=True)
+
+
+def test_set_method_set_for_existent_attribute() -> None:
+    customer = StubCustomerEntity(name="John Doe")
+    assert customer.name == "John Doe"
+
+    customer._set("name", "Jane Doe")
+    assert customer.name == "Jane Doe"
+
+
+def test_set_method_doesnt_set_for_non_existent_attribute() -> None:
+    customer = StubCustomerEntity(name="John Doe")
+
+    assert 'email' not in customer.to_dict()
+    with pytest.raises(AttributeError) as exc_info:
+        customer._set("email", "some_email@email.com")
+
+    assert str(exc_info.value) == "'StubCustomerEntity' object has no attribute 'email'"
+    assert 'email' not in customer.to_dict()
