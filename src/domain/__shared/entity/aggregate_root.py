@@ -9,7 +9,7 @@ from .external_entity_id import ExternalEntityId
 from .unique_entity_id import UniqueEntityId
 
 
-@dataclass(kw_only=True)
+@dataclass(kw_only=True, frozen=True, slots=True)
 class AggregateRoot(ABC):
     """Base class for aggregate roots.
 
@@ -19,7 +19,8 @@ class AggregateRoot(ABC):
         created_at: The timestamp when the aggregate root was created.
         updated_at: The timestamp when the aggregate root was last updated.
     """
-    _id: Optional[UniqueEntityId]
+
+    _id: Optional[UniqueEntityId] = None
     _external_id: ExternalEntityId = field(default_factory=ExternalEntityId)
     created_at: datetime = field(default_factory=datetime.now)
     updated_at: datetime = field(default_factory=datetime.now)
@@ -65,10 +66,10 @@ class AggregateRoot(ABC):
         """
         entity_dict = asdict(self)
 
-        entity_dict.pop('_id')
+        entity_dict.pop("_id")
         entity_dict["id"] = self.id
 
-        entity_dict.pop('_external_id')
+        entity_dict.pop("_external_id")
         entity_dict["external_id"] = self.external_id
 
         return entity_dict

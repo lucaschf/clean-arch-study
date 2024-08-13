@@ -1,21 +1,21 @@
-from typing import Iterable
+from dataclasses import dataclass, field
+from typing import Tuple
 
 from src.domain.__shared.error import DomainError
 from src.domain.__shared.validator.error_details import ValidationErrorDetails
 
 
+@dataclass(kw_only=True, frozen=True, slots=True)
 class ValidationError(DomainError):
     """A class representing a validation error."""
 
-    def __init__(self, errors: Iterable[ValidationErrorDetails]) -> None:
-        super().__init__("Validation error")
-        self.errors = errors or []
+    message: str = "Validation error"
+    errors: Tuple[ValidationErrorDetails] = field(default_factory=list)
 
-    def __str__(self) -> str:
+    def __repr__(self) -> str:
         errors_count = len(self.errors)
-        errors_as_str = ', '.join([str(error) for error in self.errors])
-        return (f"{errors_count} Validation error{'s' if errors_count > 1 else ''}:"
-                f" {errors_as_str}")
+        errors_as_str = ", ".join([f"{error!r}" for error in self.errors])
+        return f"{errors_count} Validation error{'s' if errors_count > 1 else ''}: {errors_as_str}"
 
 
 __all__ = ["ValidationError"]

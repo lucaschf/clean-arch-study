@@ -6,8 +6,8 @@ from typing import Any, Optional
 @dataclass(frozen=True, slots=True)
 class ValidationErrorDetails:
     loc: tuple[str | int]
-    input_value: Any
     msg: str
+    input_value: Any
     context: Optional[dict[str, Any]] = field(default=None)
 
     def __str__(self) -> str:
@@ -17,4 +17,4 @@ class ValidationErrorDetails:
         return f"{self.__class__.__name__}({self.__str__()})"
 
 
-__all__ = ['ValidationErrorDetails']
+__all__ = ["ValidationErrorDetails"]

@@ -1,12 +1,14 @@
+from dataclasses import dataclass
+
 from .domain_error import DomainError
 
 
+@dataclass(kw_only=True, frozen=True, slots=True)
 class InvalidUUIDError(DomainError):
     """Exception raised for invalid UUIDs."""
 
-    def __init__(self, uuid: str, message: str = "Invalid UUID") -> None:
-        super().__init__(message)
-        self.uuid = uuid
+    uuid: str
+    message: str = "Invalid UUID"
 
 
 __all__ = ["InvalidUUIDError"]

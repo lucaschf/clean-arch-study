@@ -29,10 +29,10 @@ def test_is_a_dataclass() -> None:
 
 
 def test_value_object_immutable() -> None:
-    obj = Stub(prop='prop')
+    obj = Stub(prop="prop")
     with pytest.raises(dataclasses.FrozenInstanceError):
         # noinspection PyDataclass
-        obj.prop = '20'
+        obj.prop = "20"
 
 
 def test_init_properties() -> None:

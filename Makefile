@@ -39,7 +39,6 @@ lint-check-tests:
 
 ## lint-fix-tests: Format and fix linting issues in test files.
 lint-fix-tests:
-	@ isort $(ISORT_OPTS) $(TEST_DIRS)
 	@ ruff check $(TEST_DIRS) --fix
 	@ ruff format $(TEST_DIRS)
 

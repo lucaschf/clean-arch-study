@@ -17,17 +17,16 @@ class ObjectIdValidator(IValidator[str]):
                         input_value=str(value),
                         context={"expected_type": "str", "received_type": type(value).__name__},
                     ),
-                )
+                ),
             )
 
         if not ObjectId.is_valid(value):
-            return ValidationResult(is_valid=False, errors=(
-                ValidationErrorDetails(
-                    loc=("id",),
-                    msg="Invalid Object Id",
-                    input_value=value
+            return ValidationResult(
+                is_valid=False,
+                errors=(
+                    ValidationErrorDetails(loc=("id",), msg="Invalid Object Id", input_value=value),
                 ),
-            ))
+            )
 
         return ValidationResult(is_valid=True)
 

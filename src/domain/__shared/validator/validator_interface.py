@@ -44,7 +44,7 @@ class IValidator[T](ABC):
         """
         validation_result = self.validate(obj)
         if not validation_result.is_valid:
-            raise ValidationError(validation_result.errors)
+            raise ValidationError(errors=validation_result.errors)
 
 
 __all__ = ["IValidator", "ValidationResult"]

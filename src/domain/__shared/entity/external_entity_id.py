@@ -12,6 +12,7 @@ class ExternalEntityId(ValueObject):
     Attributes:
         id (str): The unique identifier for the external entity, defaulting to a new UUID.
     """
+
     id: str = field(default_factory=lambda: str(uuid4()))
 
     def __post_init__(self) -> None:

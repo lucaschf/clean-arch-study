@@ -10,6 +10,7 @@ class UniqueEntityId(ValueObject):
 
     It is used to uniquely identify entities in the domain model.
     """
+
     id: str = field()
 
     def __post_init__(self) -> None:
