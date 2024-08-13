@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from dataclasses import asdict, dataclass, field
 from datetime import datetime
-from typing import Optional
+from typing import Any, Optional
 
 from ..validator import ValidationError
 from ..validator.validator_interface import ValidationResult
@@ -50,13 +50,18 @@ class AggregateRoot(ABC):
         Raises:
             ValidationError: If the validation fails.
         """
-        pass
 
     def __post_init__(self) -> None:
         """Post-initialization processing to validate the aggregate root."""
         validation_result = self.validate()
         if not validation_result.is_valid:
             raise ValidationError(errors=validation_result.errors)
+
+    def _set(self, name: str, value: Any) -> 'AggregateRoot':  # noqa: ANN401
+        """Sets the aggregate root properties."""
+        object.__setattr__(self, name, value)
+        self.validate()
+        return self
 
     def to_dict(self) -> dict:
         """Converts the aggregate root to a dictionary.
@@ -71,6 +76,9 @@ class AggregateRoot(ABC):
 
         entity_dict.pop("_external_id")
         entity_dict["external_id"] = self.external_id
+
+        entity_dict["created_at"] = self.created_at.isoformat()
+        entity_dict["updated_at"] = self.updated_at.isoformat()
 
         return entity_dict
 
