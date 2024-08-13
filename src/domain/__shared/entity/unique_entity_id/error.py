@@ -1,12 +1,14 @@
+from dataclasses import dataclass
+
 from src.domain.__shared.error import DomainError
 
 
+@dataclass(kw_only=True, frozen=True, slots=True)
 class InvalidEntityUniqueIdError(DomainError):
     """Exception raised for invalid Object Ids."""
 
-    def __init__(self, entity_id: str, message: str = "Invalid entity Id") -> None:
-        super().__init__(message)
-        self.entity_id = entity_id
+    message: str = "Invalid entity Id"
+    entity_id: str
 
 
 __all__ = ["InvalidEntityUniqueIdError"]

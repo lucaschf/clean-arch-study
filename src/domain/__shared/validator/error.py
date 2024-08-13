@@ -10,7 +10,7 @@ class ValidationError(DomainError):
     """A class representing a validation error."""
 
     message: str = "Validation error"
-    errors: Tuple[ValidationErrorDetails] = field(default_factory=list)
+    errors: Tuple[ValidationErrorDetails] = field(default_factory=tuple)
 
     def __repr__(self) -> str:
         errors_count = len(self.errors)
