@@ -9,9 +9,6 @@ help:
 SRC_DIRS := src
 TEST_DIRS := tests
 
-# Options for isort
-ISORT_OPTS = --use-parentheses --line-length=100 --multi-line=3 --trailing-comma
-
 # Xenon configuration
 XENON_MAX_ABSOLUTE := B
 XENON_MAX_MODULES := B
@@ -34,7 +31,6 @@ lint-fix:
 
 ## lint-check-tests: Lint test files without modifying them.
 lint-check-tests:
-	@ isort --check --diff $(ISORT_OPTS) $(TEST_DIRS)
 	@ ruff check $(TEST_DIRS)
 
 ## lint-fix-tests: Format and fix linting issues in test files.
@@ -52,6 +48,7 @@ cc:
 	       --max-modules $(XENON_MAX_MODULES) \
 	       --max-average $(XENON_MAX_AVERAGE) $(SRC_DIRS)
 
+## test: Run tests with coverage
 test:
 	coverage run -m pytest --capture=no --ff $(extra) && coverage report
 
