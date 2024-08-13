@@ -62,6 +62,7 @@ docstring-quotes = "double"
 "tests/*.py" = [
     "S101", # Use of assert detected
     "D103", # Missing docstring in public function
+    "D101", # Missing docstring in public class
 ]
 
 [lint.pydocstyle]

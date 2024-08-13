@@ -15,6 +15,20 @@ files = [
 python-dateutil = ">=2.7.0"
 
 [[package]]
+name = "bson"
+version = "0.5.10"
+description = "BSON codec for Python"
+optional = false
+python-versions = "*"
+files = [
+    {file = "bson-0.5.10.tar.gz", hash = "sha256:d6511b2ab051139a9123c184de1a04227262173ad593429d21e443d6462d6590"},
+]
+
+[package.dependencies]
+python-dateutil = ">=2.4.0"
+six = ">=1.9.0"
+
+[[package]]
 name = "certifi"
 version = "2024.7.4"
 description = "Python package for providing Mozilla's CA Bundle."
@@ -687,4 +701,4 @@ requests = ">=2.0,<3.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "~3.12"
-content-hash = "d53cbb6b2d6a68cf305f9964858170a529a262a7e45b68e5132e04339bdff71a"
+content-hash = "493da01bb7a44674c705ade8e05c688a6eea7269caae3449bf2bc2ef25cee0d6"
