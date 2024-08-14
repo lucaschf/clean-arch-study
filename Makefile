@@ -56,4 +56,13 @@ test:
 test-cov:
 	coverage run -m pytest --capture=no &&coverage report &&coverage html
 
-.PHONY: install lint-check lint-fix lint-check-tests lint-fix-tests cc test test-cov help
+## dev: Run the development server.
+dev:
+	set -e &&export ENVIRONMENT='dev' && uvicorn $(SRC_DIRS).application.api:app --host 0.0.0.0 --reload
+
+## prod: Run as prod server.
+prod:
+	set -e &&export ENVIRONMENT='prod' && uvicorn $(SRC_DIRS).application.api:app --host 0.0.0.0 --reload
+
+
+.PHONY: install lint-check lint-fix lint-check-tests lint-fix-tests cc test test-cov dev prod help

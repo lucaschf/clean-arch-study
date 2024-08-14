@@ -57,7 +57,7 @@ class AggregateRoot(ABC):
         if not validation_result.is_valid:
             raise ValidationError(errors=validation_result.errors)
 
-    def _set(self, name: str, value: Any) -> 'AggregateRoot':  # noqa: ANN401
+    def _set(self, name: str, value: Any) -> "AggregateRoot":  # noqa: ANN401
         """Sets the aggregate root properties."""
         object.__setattr__(self, name, value)
         self.validate()
