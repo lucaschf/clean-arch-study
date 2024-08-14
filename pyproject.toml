@@ -21,6 +21,7 @@ xenon = "~0.9.1"
 gitlint = "~0.19.1"
 coverage = "^7.6.1"
 pytest = "^8.3.2"
+pytest-mock = "^3.14.0"
 
 [build-system]
 requires = ["poetry-core"]
