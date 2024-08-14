@@ -1,8 +1,6 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from src.domain.__shared.entity import UniqueEntityId
-
 router = APIRouter()
 
 
@@ -28,7 +26,6 @@ def health_check() -> HealthCheckOut:
     Returns:
         HealthCheckOut: A model containing a status key with a value "OK".
     """
-    UniqueEntityId(id="1")
     return HealthCheckOut(status="OK")
 
 
