@@ -5,6 +5,7 @@ from typing import Callable, Coroutine
 from fastapi import FastAPI, Request, Response
 from starlette.responses import JSONResponse
 
+from src.application.api.config import setup_cors, setup_sentry
 from src.application.api.routers import register_routes
 from src.domain.__shared.error import DomainError
 from src.domain.__shared.validator import ValidationError as DomainValidationError
@@ -74,7 +75,7 @@ def handle_error(e: Exception) -> Response:
 
     if isinstance(e, DomainError):
         return JSONResponse(
-            status_code=HTTPStatus.UNPROCESSABLE_ENTITY,
+            status_code=HTTPStatus.BAD_REQUEST,
             content={"detail": e.message},
         )
 
@@ -86,6 +87,9 @@ def handle_error(e: Exception) -> Response:
 
 
 register_routes(app)
+setup_sentry(app, settings.SENTRY_DSN)
+setup_cors(app, settings.ALLOWED_ORIGINS)
+
 app.middleware("http")(_exception_middleware)
 
 __all__ = ["app"]
