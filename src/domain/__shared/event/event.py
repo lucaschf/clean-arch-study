@@ -14,6 +14,7 @@ class Event[T](ABC):
         data: The data payload of the event, representing the specifics of what occurred.
         timestamp: The datetime when the event took place.
     """
+
     data: T
     timestamp: datetime = field(default_factory=datetime.now)
 

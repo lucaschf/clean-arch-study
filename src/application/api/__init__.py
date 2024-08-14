@@ -13,3 +13,7 @@ Key responsibilities:
 * Other external interactions: Handle any other interactions with external resources or systems
   required by the application.
 """
+
+from .app import app
+
+__all__ = ["app"]
